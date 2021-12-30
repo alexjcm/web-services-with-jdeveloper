@@ -15,16 +15,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import javax.xml.bind.annotation.XmlRootElement;
-
 import javax.persistence.FetchType;
 
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
 @Table(name = "PRODUCT")
-@XmlRootElement(name = "product")
+@XmlType(propOrder = { "description", "id", "productCode" })
 @NamedQueries({ @NamedQuery(name = "Product.findAll", query = "select o from Product o") })
 public class Product implements Serializable {
 
@@ -40,8 +38,7 @@ public class Product implements Serializable {
     @Column(name = "PRODUCT_CODE", nullable = false, length = 50)
     private String productCode;
 
-    @XmlTransient
-    //@OneToMany(mappedBy = "product", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @XmlTransient 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderrDetail> orderrDetailList;
 

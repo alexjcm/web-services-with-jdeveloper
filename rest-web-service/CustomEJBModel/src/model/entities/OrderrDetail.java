@@ -14,11 +14,11 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
 @Table(name = "ORDERR_DETAIL")
-@XmlRootElement(name = "orderrDetail")
+@XmlType(propOrder = { "id", "orderr", "product", "quantity" })
 @NamedQueries({ @NamedQuery(name = "OrderrDetail.findAll", query = "select o from OrderrDetail o") })
 public class OrderrDetail implements Serializable {
 
@@ -36,12 +36,10 @@ public class OrderrDetail implements Serializable {
     // FK
     @ManyToOne
     @JoinColumn(name = "ORDERR_ID")
-    //@JoinColumn(name = "ORDERR_ID", referencedColumnName = "ID")
     private Orderr orderr;
     // FK
     @ManyToOne
     @JoinColumn(name = "PRODUCT_ID")
-    //@JoinColumn(name = "PRODUCT_ID", referencedColumnName = "ID")
     private Product product;
 
     public OrderrDetail() {

@@ -14,7 +14,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import model.entities.Customer;
-import model.entities.Orderr;
 
 import model.facade.CustomSessionEJBLocal;
 

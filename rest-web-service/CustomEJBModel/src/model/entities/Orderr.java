@@ -20,15 +20,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Table;
-
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-
 import javax.persistence.FetchType;
+
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
 @Table(name = "ORDERR")
-@XmlRootElement(name = "orderr")
+@XmlType(propOrder = { "customer", "documentNumber", "id", "orderrDate" })
 @NamedQueries({ @NamedQuery(name = "Orderr.findAll", query = "select o from Orderr o") })
 public class Orderr implements Serializable {
 
@@ -42,18 +41,15 @@ public class Orderr implements Serializable {
     @Column(name = "DOCUMENT_NUMBER", unique = true)
     private Long documentNumber;
     @Temporal(TemporalType.DATE)
-    //@XmlJavaTypeAdapter(model.adapter.DateStringToCalendar.class)
     @Column(name = "ORDERR_DATE", nullable = false)
     private Date orderrDate;
 
     // FK
     @ManyToOne
     @JoinColumn(name = "CUSTOMER_ID")
-    //@JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID")
     private Customer customer;
 
     @XmlTransient
-    //@OneToMany(mappedBy = "orderr", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @OneToMany(mappedBy = "orderr", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<OrderrDetail> orderrDetailList;
 

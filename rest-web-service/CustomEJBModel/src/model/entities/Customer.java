@@ -14,10 +14,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import javax.persistence.SequenceGenerator;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,10 +21,11 @@ import javax.persistence.Table;
 import javax.persistence.FetchType;
 
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
 @Table(name = "CUSTOMER")
-@XmlRootElement(name = "customer")
+@XmlType(propOrder = { "birthDate", "customerCode", "firstName", "id", "lastName", "taxIdentificationNumber" })
 @NamedQueries({ @NamedQuery(name = "Customer.findAll", query = "select o from Customer o") })
 public class Customer implements Serializable {
 
@@ -39,8 +36,7 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CUST_SEQ")
     @SequenceGenerator(name = "CUST_SEQ", sequenceName = "CUSTOMER_ID_SEQ_GEN", allocationSize = 1, initialValue = 1)
     private Long id;
-    @Temporal(TemporalType.DATE)
-    //@XmlJavaTypeAdapter(model.adapter.DateStringToCalendar.class)
+    @Temporal(TemporalType.DATE) 
     @Column(name = "BIRTH_DATE")
     private Date birthDate;
     @Column(name = "CUSTOMER_CODE", unique = true, length = 50)
@@ -53,7 +49,6 @@ public class Customer implements Serializable {
     private String taxIdentificationNumber;
 
     @XmlTransient
-    //@OneToMany(mappedBy = "customer", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Orderr> orderrList;
 
@@ -139,4 +134,6 @@ public class Customer implements Serializable {
         orderr.setCustomer(null);
         return orderr;
     }
+    
+    
 }
